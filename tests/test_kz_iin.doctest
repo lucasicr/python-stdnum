@@ -27,7 +27,7 @@ Tests for some corner cases.
 
 >>> iin.validate('921029350851')
 '921029350851'
->>> iin.validate('921029 35085 1)
+>>> iin.validate('921029 35085 1')
 '921029350851'
 >>> iin.is_valid('921029350851')
 True
