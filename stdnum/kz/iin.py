@@ -99,7 +99,7 @@ def get_birth_date(number: str) -> datetime.date:
         raise InvalidComponent()
 
 
-def get_gender(number: str) -> str:
+def get_gender(number: str) -> str | None:
     """Get the gender of the person's Individual identification number."""
 
     number = compact(number)
@@ -107,9 +107,9 @@ def get_gender(number: str) -> str:
     if number[6] == '0':
         return None
     elif int(number[6]) % 2:
-        return 'F'
-    else:
         return 'M'
+    else:
+        return 'F'
 
 
 def validate(number: str) -> str:
