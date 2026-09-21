@@ -19,11 +19,10 @@
 """IIN (ЖСН, Жеке сәйкестендіру нөмірі, Kazakhstani Individual identification number).
 
 It is a 12-digit number of which the first 6 digits denote the person's
-birth date, the next three digits represent a birth order number 
+birth date, the next three digits represent a birth order number
 and the last digit is a check digit.
 
 * https://www.gov.kz/article/648?lang=kk
-* https://www.oecd.org/en/networks/global-forum-tax-transparency/resources/aeoi-implementation-portal/tax-identification-numbers.html
 * https://ru.wikipedia.org/wiki/Индивидуальный_идентификационный_номер
 
 
@@ -63,35 +62,38 @@ def compact(number: str) -> str:
 def calc_check_digit(number: str) -> str:
     """Calculate the check digit. The number passed should not have
     the check digit included."""
+    s = sum(w * int(n) for w, n in zip(range(1, 12), number[:11])) % 11
+    if s != 10:
+        return str(s)
 
-    s = sum(w * int(n) for w, n in zip(range(1,12), number[:11])) % 11
-    if s != 10: return str(s)
-    
-    s = sum(w * int(n) for w, n in zip(range(3,14), number[:11])) % 11
-    if s != 10: return str(s)
+    s = sum(w * int(n) for w, n in zip(range(3, 14), number[:11])) % 11
+    if s != 10:
+        return str(s)
 
     raise InvalidComponent()
 
 
 def get_birth_date(number: str) -> datetime.date:
     """Get the birth date from the person's Individual identification number."""
-
     number = compact(number)
-
     year = int(number[0:2])
     month = int(number[2:4])
     day = int(number[4:6])
 
-    if number[6] == '0': # no century info for foreign nationals
+    if number[6] == '0':  # no century info for foreign nationals
         today = datetime.date.today()
         year += (today.year // 100) * 100
         if year > today.year:
             year -= 100
 
-    elif number[6] in '12': year += 1800
-    elif number[6] in '34': year += 1900
-    elif number[6] in '56': year += 2000
-    else: raise InvalidComponent()
+    elif number[6] in '12':
+        year += 1800
+    elif number[6] in '34':
+        year += 1900
+    elif number[6] in '56':
+        year += 2000
+    else:
+        raise InvalidComponent()
 
     try:
         return datetime.date(year, month, day)
@@ -101,9 +103,7 @@ def get_birth_date(number: str) -> datetime.date:
 
 def get_gender(number: str) -> str | None:
     """Get the gender of the person's Individual identification number."""
-
     number = compact(number)
-
     if number[6] == '0':
         return None
     elif int(number[6]) % 2:
@@ -113,7 +113,7 @@ def get_gender(number: str) -> str | None:
 
 
 def validate(number: str) -> str:
-    """Check if the given Individual identification number is valid. 
+    """Check if the given Individual identification number is valid.
     This checks the length and whether the check digit is correct."""
     number = compact(number)
     if not isdigits(number):
