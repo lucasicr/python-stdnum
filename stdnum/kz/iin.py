@@ -43,6 +43,12 @@ Traceback (most recent call last):
 InvalidComponent: ...
 """
 
+from __future__ import annotations
+
+import datetime
+
+from stdnum.exceptions import *
+from stdnum.util import clean, isdigits
 
 
 def compact(number: str) -> str:
@@ -91,6 +97,7 @@ def get_birth_date(number: str) -> datetime.date:
         return datetime.date(year, month, day)
     except ValueError:
         raise InvalidComponent()
+
 
 def get_gender(number: str) -> str:
     """Get the gender of the person's Individual identification number."""
