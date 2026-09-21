@@ -113,7 +113,7 @@ def validate(number: str) -> str:
         raise InvalidFormat()
     if len(number) != 12:
         raise InvalidLength()
-    if get_birth_date(number) > datetime.date.today()
+    if get_birth_date(number) > datetime.date.today():
         raise InvalidComponent()
     if calc_check_digit(number[:-1]) != number[-1]:
         raise InvalidChecksum()
