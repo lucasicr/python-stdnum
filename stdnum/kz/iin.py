@@ -90,7 +90,7 @@ def get_birth_date(number: str) -> datetime.date:
 
     elif number[6] in '12': year += 1800
     elif number[6] in '34': year += 1900
-    elif number[6] in '46': year += 2000
+    elif number[6] in '56': year += 2000
     else: raise InvalidComponent()
 
     try:
