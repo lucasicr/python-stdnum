@@ -83,7 +83,7 @@ def get_birth_date(number: str) -> datetime.date:
     if number[6] == '0':  # no century info for foreign nationals
         today = datetime.date.today()
         year += (today.year // 100) * 100
-        if year > today.year:
+        if year >= today.year:
             year -= 100
 
     elif number[6] in '12':
