@@ -19,7 +19,8 @@
 """IIN (ЖСН, Жеке сәйкестендіру нөмірі, Kazakhstani Individual identification number).
 
 It is a 12-digit number of which the first 6 digits denote the person's
-birth date, the next three digits represent a birth order number
+birth date in the format YYMMDD, the next digit encodes the gender and
+century of birth, the next four digits represent a birth serial number
 and the last digit is a check digit.
 
 * https://www.gov.kz/article/648?lang=kk
